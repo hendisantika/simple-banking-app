@@ -1,5 +1,6 @@
 package id.my.hendisantika.simplebankingapp.config;
 
+import id.my.hendisantika.simplebankingapp.model.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
