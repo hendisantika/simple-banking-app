@@ -53,4 +53,14 @@ public class AccountServiceTests {
             exception.printStackTrace();
         }
     }
+
+    @Test
+    void createAccountWillCallInsertBalanceOnBalanceMapper() {
+        try {
+            accountService.createAccount(account);
+            Mockito.verify(balanceMapper, Mockito.times(1)).insertBalances(account.getBalances());
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+    }
 }
