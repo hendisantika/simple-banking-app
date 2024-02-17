@@ -2,12 +2,14 @@ package id.my.hendisantika.simplebankingapp.service;
 
 import id.my.hendisantika.simplebankingapp.UnitTestHelper;
 import id.my.hendisantika.simplebankingapp.config.MessagePublisher;
+import id.my.hendisantika.simplebankingapp.dto.TransactionResponse;
 import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.mapper.AccountMapper;
 import id.my.hendisantika.simplebankingapp.mapper.TransactionMapper;
 import id.my.hendisantika.simplebankingapp.model.Account;
 import id.my.hendisantika.simplebankingapp.model.Balance;
 import id.my.hendisantika.simplebankingapp.model.Transaction;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -79,6 +81,20 @@ public class TransactionServiceTests {
         }
 
         Mockito.verify(publisher, Mockito.times(1)).publishAccountDetails(account);
+    }
+
+    @Test
+    void createTransactionWillReturnResponse() {
+        TransactionResponse response = null;
+        try {
+            Mockito.doNothing().when(transactionMapper).insertTransaction(transaction);
+            Mockito.doNothing().when(publisher).publishAccountDetails(account);
+            response = transactionService.createTransaction(transaction);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+        Assertions.assertNotNull(response);
     }
 
 }
