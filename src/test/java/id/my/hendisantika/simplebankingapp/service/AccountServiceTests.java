@@ -2,6 +2,7 @@ package id.my.hendisantika.simplebankingapp.service;
 
 import id.my.hendisantika.simplebankingapp.UnitTestHelper;
 import id.my.hendisantika.simplebankingapp.config.MessagePublisher;
+import id.my.hendisantika.simplebankingapp.dto.AccountResponse;
 import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.mapper.AccountMapper;
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
@@ -88,4 +89,19 @@ public class AccountServiceTests {
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, apiException.getStatus());
     }
+
+    @Test
+    void getAccountReturnResponseWhenAccountIsFound() {
+        Mockito.when(accountMapper.findById(Mockito.anyLong())).thenReturn(Optional.of(account));
+        AccountResponse accountResponse = null;
+        try {
+            accountResponse = accountService.getAccount(1L);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+        Assertions.assertNotNull(accountResponse);
+        Assertions.assertEquals(accountResponse.getCustomerId(), account.getCustomerId());
+    }
+
 }
