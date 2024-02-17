@@ -17,6 +17,9 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -97,4 +100,18 @@ public class TransactionServiceTests {
         Assertions.assertNotNull(response);
     }
 
+    @Test
+    void getTransactionWillReturnListOfTransaction() {
+        Mockito.when(transactionMapper.findByAccountId(Mockito.anyLong())).thenReturn(Collections.singletonList(transaction));
+        List<Transaction> transactions = null;
+        try {
+            transactions = transactionService.getTransactions(1);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+
+        Assertions.assertNotNull(transactions);
+        Assertions.assertEquals(1, transactions.size());
+    }
 }
