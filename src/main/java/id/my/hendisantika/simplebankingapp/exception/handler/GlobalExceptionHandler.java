@@ -1,6 +1,7 @@
 package id.my.hendisantika.simplebankingapp.exception.handler;
 
 import id.my.hendisantika.simplebankingapp.exception.ApiException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +22,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleApiError(ApiException exception) {
         return ResponseEntity
                 .status(exception.getStatus())
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<String> handleInternalError(Exception exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(exception.getMessage());
     }
 }
