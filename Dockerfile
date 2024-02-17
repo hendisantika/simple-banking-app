@@ -24,16 +24,24 @@ RUN mvn clean package
 FROM amazoncorretto:21-alpine-jdk
 LABEL maintainer="hendisantika@yahoo.co.id"
 
-RUN mkdir /app
+#RUN mkdir /app
+#
+#RUN addgroup -g 1001 -S hendigroup
+#
+#RUN adduser -S hendi -u 1001
+#
+#COPY --from=build /project/target/simple-banking-app-0.0.1.jar /app/simple-banking-app.jar
+#
+#WORKDIR /app
+#
+#RUN chown -R hendi:hendigroup /app
 
-RUN addgroup -g 1001 -S hendigroup
+VOLUME /tmp
+EXPOSE 8081
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} simple-banking-app.jar
+ENTRYPOINT ["java","-jar","simple-banking-app.jar"]
 
-RUN adduser -S hendi -u 1001
 
-COPY --from=build /project/target/simple-banking-app-0.0.1.jar /app/simple-banking-app.jar
-
-WORKDIR /app
-
-RUN chown -R hendi:hendigroup /app
 
 CMD java $JAVA_OPTS -jar simple-banking-app.jar
