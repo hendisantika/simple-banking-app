@@ -29,4 +29,9 @@ public class UtilsTests {
     void isEmptyReturnTrueWhenInputListEmpty() {
         Assertions.assertTrue(Utils.isEmpty(List.of()));
     }
+
+    @Test
+    void isEmptyReturnFalseWhenInputListHasValue() {
+        Assertions.assertFalse(Utils.isEmpty(List.of("Item")));
+    }
 }
