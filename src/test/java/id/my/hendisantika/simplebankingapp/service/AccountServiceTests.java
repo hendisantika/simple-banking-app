@@ -63,4 +63,14 @@ public class AccountServiceTests {
             exception.printStackTrace();
         }
     }
+
+    @Test
+    void createAccountWillPublishMessage() {
+        try {
+            accountService.createAccount(account);
+            Mockito.verify(publisher, Mockito.times(1)).publishAccountDetails(account);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+    }
 }
