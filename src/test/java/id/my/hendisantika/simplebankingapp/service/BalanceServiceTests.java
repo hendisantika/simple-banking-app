@@ -6,6 +6,7 @@ import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
 import id.my.hendisantika.simplebankingapp.model.Balance;
 import id.my.hendisantika.simplebankingapp.model.Transaction;
 import id.my.hendisantika.simplebankingapp.model.enums.Currency;
+import id.my.hendisantika.simplebankingapp.model.enums.Direction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,5 +95,18 @@ public class BalanceServiceTests {
 
         Assertions.assertNotNull(balance);
         Assertions.assertEquals(0, balance.getAmount().compareTo(targetAmount));
+    }
+
+    @Test
+    void updateBalanceThrowExceptionOutDirectionWhenAmountBecomeNegative() {
+        Transaction transaction = UnitTestHelper.getTransaction();
+        transaction.setDirection(Direction.OUT);
+        transaction.setAmount(BigDecimal.valueOf(10));
+
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
+            balanceService.updateAmountOfBalance(transaction);
+        });
+
+        Assertions.assertNotNull(apiException);
     }
 }
