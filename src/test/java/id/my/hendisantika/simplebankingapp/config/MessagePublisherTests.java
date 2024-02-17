@@ -40,4 +40,9 @@ public class MessagePublisherTests {
         Mockito.verify(rabbitTemplate, Mockito.times(1))
                 .convertAndSend(Mockito.any(), Mockito.any(Account.class));
     }
+
+    @Test
+    void publishMessageShouldCallQueueName() {
+        Mockito.verify(queue, Mockito.times(1)).getName();
+    }
 }
