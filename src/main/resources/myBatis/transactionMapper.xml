@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banking.mapper.TransactionMapper">
+    <insert id="insertTransaction" parameterType="com.banking.model.Transaction"
+            keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO transactions(account_id, amount, currency, direction, description)
+        VALUES (#{accountId}, #{amount}, #{currency}, #{direction}, #{description})
+    </insert>
+
+    <resultMap id="transactionResultMap" type="com.banking.model.Transaction">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="accountId" column="account_id" jdbcType="BIGINT"/>
+        <result property="currency" column="currency" jdbcType="VARCHAR"/>
+        <result property="direction" column="direction" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="amount" column="amount" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <select id="findByAccountId" parameterType="long"
+            resultMap="transactionResultMap">
+        SELECT *
+        FROM transactions
+        WHERE account_id = #{accountId}
+    </select>
+
+</mapper>
