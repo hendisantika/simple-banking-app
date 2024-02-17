@@ -5,7 +5,9 @@ import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.form.AccountForm;
 import id.my.hendisantika.simplebankingapp.service.AccountService;
 import id.my.hendisantika.simplebankingapp.validator.AccountFormValidator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -48,5 +50,17 @@ class AccountControllerTests {
         } catch (ApiException exception) {
             exception.printStackTrace();
         }
+    }
+
+    @Test
+    void createAccountWillReturnResponse() {
+        AccountResponse response = null;
+        try {
+            response = controller.createAccount(form, bindingResult);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+        Assertions.assertNotNull(response);
     }
 }
