@@ -6,12 +6,16 @@ import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.mapper.AccountMapper;
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
 import id.my.hendisantika.simplebankingapp.model.Account;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.Optional;
 
 /**
  * Created by IntelliJ IDEA.
@@ -72,5 +76,16 @@ public class AccountServiceTests {
         } catch (ApiException exception) {
             exception.printStackTrace();
         }
+    }
+
+    @Test
+    void getAccountThroughExceptionWhenAccountNotFound() {
+        Mockito.when(accountMapper.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
+            accountService.getAccount(1L);
+        });
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, apiException.getStatus());
     }
 }
