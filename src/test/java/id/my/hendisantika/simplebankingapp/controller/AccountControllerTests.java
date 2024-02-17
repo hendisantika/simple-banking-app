@@ -38,18 +38,14 @@ class AccountControllerTests {
     private AccountResponse response;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws ApiException {
         controller = new AccountController(validator, accountService);
         form = new AccountForm();
         Mockito.when(bindingResult.hasErrors()).thenReturn(false);
         Mockito.doNothing().when(validator).validate(Mockito.any(), Mockito.any());
         response = new AccountResponse(0, null, null);
-        try {
-            Mockito.when(accountService.createAccount(Mockito.any()))
-                    .thenReturn(response);
-        } catch (ApiException exception) {
-            exception.printStackTrace();
-        }
+        Mockito.when(accountService.createAccount(Mockito.any()))
+                .thenReturn(response);
     }
 
     @Test

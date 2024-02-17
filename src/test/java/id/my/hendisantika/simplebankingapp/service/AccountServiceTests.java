@@ -17,7 +17,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,33 +52,21 @@ public class AccountServiceTests {
     }
 
     @Test
-    void createAccountWillCallInsertAccountOfMapper() {
-        try {
-            accountService.createAccount(account);
-            Mockito.verify(accountMapper, Mockito.times(1)).insertAccount(account);
-        } catch (ApiException exception) {
-            exception.printStackTrace();
-        }
+    void createAccountWillCallInsertAccountOfMapper() throws ApiException {
+        accountService.createAccount(account);
+        Mockito.verify(accountMapper, Mockito.times(1)).insertAccount(account);
     }
 
     @Test
-    void createAccountWillCallInsertBalanceOnBalanceMapper() {
-        try {
-            accountService.createAccount(account);
-            Mockito.verify(balanceMapper, Mockito.times(1)).insertBalances(account.getBalances());
-        } catch (ApiException exception) {
-            exception.printStackTrace();
-        }
+    void createAccountWillCallInsertBalanceOnBalanceMapper() throws ApiException {
+        accountService.createAccount(account);
+        Mockito.verify(balanceMapper, Mockito.times(1)).insertBalances(account.getBalances());
     }
 
     @Test
-    void createAccountWillPublishMessage() {
-        try {
-            accountService.createAccount(account);
-            Mockito.verify(publisher, Mockito.times(1)).publishAccountDetails(account);
-        } catch (ApiException exception) {
-            exception.printStackTrace();
-        }
+    void createAccountWillPublishMessage() throws ApiException {
+        accountService.createAccount(account);
+        Mockito.verify(publisher, Mockito.times(1)).publishAccountDetails(account);
     }
 
     @Test
