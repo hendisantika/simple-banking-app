@@ -78,4 +78,21 @@ public class BalanceServiceTests {
 
         Assertions.assertNotNull(apiException);
     }
+
+    @Test
+    void updateBalanceWillAddAmountForInDirection() {
+        BigDecimal targetAmount = BigDecimal.valueOf(10);
+        Transaction transaction = UnitTestHelper.getTransaction();
+        transaction.setAmount(targetAmount);
+
+        Balance balance = null;
+        try {
+            balance = balanceService.updateAmountOfBalance(transaction);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+        Assertions.assertNotNull(balance);
+        Assertions.assertEquals(0, balance.getAmount().compareTo(targetAmount));
+    }
 }
