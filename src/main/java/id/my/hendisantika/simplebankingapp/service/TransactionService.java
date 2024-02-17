@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : simple-banking-app
@@ -49,5 +51,11 @@ public class TransactionService {
         publisher.publishAccountDetails(account);
 
         return getTransactionResponse(transaction, balance.getAmount());
+    }
+
+    public List<Transaction> getTransactions(long accountId) throws ApiException {
+        accountMapper.findById(accountId)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invalid account"));
+        return transactionMapper.findByAccountId(accountId);
     }
 }
