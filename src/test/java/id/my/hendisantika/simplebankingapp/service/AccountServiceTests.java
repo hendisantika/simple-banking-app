@@ -3,6 +3,7 @@ package id.my.hendisantika.simplebankingapp.service;
 import id.my.hendisantika.simplebankingapp.UnitTestHelper;
 import id.my.hendisantika.simplebankingapp.config.MessagePublisher;
 import id.my.hendisantika.simplebankingapp.dto.AccountResponse;
+import id.my.hendisantika.simplebankingapp.dto.BalanceResponse;
 import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.mapper.AccountMapper;
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
@@ -16,6 +17,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -104,4 +107,19 @@ public class AccountServiceTests {
         Assertions.assertEquals(accountResponse.getCustomerId(), account.getCustomerId());
     }
 
+    @Test
+    void getAccountReturnBalanceAlsoWhenAccountIsFound() {
+        account.setBalances(List.of(UnitTestHelper.getBalance()));
+        Mockito.when(accountMapper.findById(Mockito.anyLong())).thenReturn(Optional.of(account));
+        List<BalanceResponse> balanceResponses = null;
+        try {
+            AccountResponse accountResponse = accountService.getAccount(1L);
+            balanceResponses = accountResponse.getBalances();
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+        Assertions.assertNotNull(balanceResponses);
+        Assertions.assertEquals(1, balanceResponses.size());
+    }
 }
