@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -57,5 +58,11 @@ public class TransactionService {
         accountMapper.findById(accountId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Invalid account"));
         return transactionMapper.findByAccountId(accountId);
+    }
+
+    private TransactionResponse getTransactionResponse(Transaction transaction, BigDecimal balanceAfterTransaction) {
+        return new TransactionResponse(transaction.getAccountId(), transaction.getId(),
+                transaction.getAmount(), transaction.getCurrency(), transaction.getDirection(),
+                transaction.getDescription(), balanceAfterTransaction);
     }
 }
