@@ -1,11 +1,15 @@
 package id.my.hendisantika.simplebankingapp.service;
 
 import id.my.hendisantika.simplebankingapp.config.MessagePublisher;
+import id.my.hendisantika.simplebankingapp.dto.AccountResponse;
 import id.my.hendisantika.simplebankingapp.mapper.AccountMapper;
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
+import id.my.hendisantika.simplebankingapp.model.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,4 +28,18 @@ public class AccountService {
     private final MessagePublisher publisher;
     private final AccountMapper accountMapper;
     private final BalanceMapper balanceMapper;
+
+    @Transactional
+    public AccountResponse createAccount(Account account) {
+        accountMapper.insertAccount(account);
+        account.getBalances().forEach(balance -> {
+            balance.setAccountId(account.getId());
+            balance.setAmount(BigDecimal.ZERO);
+        });
+
+        balanceMapper.insertBalances(account.getBalances());
+        publisher.publishAccountDetails(account);
+
+        return getAccountResponse(account);
+    }
 }
