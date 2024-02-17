@@ -2,11 +2,14 @@ package id.my.hendisantika.simplebankingapp.service;
 
 import id.my.hendisantika.simplebankingapp.UnitTestHelper;
 import id.my.hendisantika.simplebankingapp.config.MessagePublisher;
+import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.mapper.AccountMapper;
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
 import id.my.hendisantika.simplebankingapp.model.Account;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -39,5 +42,15 @@ public class AccountServiceTests {
     void setUp() {
         accountService = new AccountService(publisher, accountMapper, balanceMapper);
         account = UnitTestHelper.getAccount();
+    }
+
+    @Test
+    void createAccountWillCallInsertAccountOfMapper() {
+        try {
+            accountService.createAccount(account);
+            Mockito.verify(accountMapper, Mockito.times(1)).insertAccount(account);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
     }
 }
