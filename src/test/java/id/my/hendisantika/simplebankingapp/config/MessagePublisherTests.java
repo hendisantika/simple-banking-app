@@ -1,5 +1,7 @@
 package id.my.hendisantika.simplebankingapp.config;
 
+import id.my.hendisantika.simplebankingapp.model.Account;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -24,4 +26,10 @@ public class MessagePublisherTests {
     @MockBean
     private Queue queue;
     private MessagePublisher messagePublisher;
+
+    @BeforeEach
+    void setUp() {
+        messagePublisher = new MessagePublisher(rabbitTemplate, queue);
+        messagePublisher.publishAccountDetails(new Account());
+    }
 }
