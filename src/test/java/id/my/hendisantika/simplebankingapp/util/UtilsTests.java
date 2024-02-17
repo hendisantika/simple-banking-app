@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : simple-banking-app
@@ -20,5 +23,10 @@ public class UtilsTests {
     @Test
     void isEmptyReturnTrueWhenInputNull() {
         Assertions.assertTrue(Utils.isEmpty(null));
+    }
+
+    @Test
+    void isEmptyReturnTrueWhenInputListEmpty() {
+        Assertions.assertTrue(Utils.isEmpty(List.of()));
     }
 }
