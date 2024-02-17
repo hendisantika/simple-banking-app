@@ -63,4 +63,14 @@ class AccountControllerTests {
 
         Assertions.assertNotNull(response);
     }
+
+    @Test
+    void createAccountWillThrowExceptionIfFormHasProblem() {
+        Mockito.when(bindingResult.hasErrors()).thenReturn(true);
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
+            controller.createAccount(form, bindingResult);
+        });
+
+        Assertions.assertNotNull(apiException);
+    }
 }
