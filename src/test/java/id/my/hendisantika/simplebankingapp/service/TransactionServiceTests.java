@@ -68,4 +68,17 @@ public class TransactionServiceTests {
         Mockito.verify(transactionMapper, Mockito.atLeastOnce()).insertTransaction(transaction);
 
     }
+
+    @Test
+    void createTransactionWillPublishAccountDetails() {
+        try {
+            Mockito.doNothing().when(transactionMapper).insertTransaction(transaction);
+            transactionService.createTransaction(transaction);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+        Mockito.verify(publisher, Mockito.times(1)).publishAccountDetails(account);
+    }
+
 }
