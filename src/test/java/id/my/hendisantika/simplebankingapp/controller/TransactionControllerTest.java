@@ -7,7 +7,9 @@ import id.my.hendisantika.simplebankingapp.model.enums.Currency;
 import id.my.hendisantika.simplebankingapp.model.enums.Direction;
 import id.my.hendisantika.simplebankingapp.service.TransactionService;
 import id.my.hendisantika.simplebankingapp.validator.TransactionFormValidator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -53,5 +55,17 @@ class TransactionControllerTest {
         } catch (ApiException exception) {
             exception.printStackTrace();
         }
+    }
+
+    @Test
+    void createTransactionWillReturnResponse() {
+        TransactionResponse response = null;
+        try {
+            response = controller.createTransaction(form, bindingResult);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+        Assertions.assertNotNull(response);
     }
 }
