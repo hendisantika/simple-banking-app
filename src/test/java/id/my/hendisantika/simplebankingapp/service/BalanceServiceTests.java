@@ -1,7 +1,9 @@
 package id.my.hendisantika.simplebankingapp.service;
 
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -22,5 +24,12 @@ public class BalanceServiceTests {
     private BalanceMapper balanceMapper;
 
     private BalanceService balanceService;
+
+    @BeforeEach
+    void setUp() {
+        balanceService = new BalanceService(balanceMapper);
+        Mockito.when(balanceMapper.findByAccountId(Mockito.anyLong())).thenReturn(balances());
+    }
+
 
 }
