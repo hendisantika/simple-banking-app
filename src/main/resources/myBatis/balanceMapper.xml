@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banking.mapper.BalanceMapper">
+    <insert id="insertBalances" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO balances(account_id, currency, amount) VALUES
+        <foreach collection="list" item="balance" index="index" open="(" separator="),(" close=")">
+            #{balance.accountId}, #{balance.currency}, #{balance.amount}
+        </foreach>
+    </insert>
+
+    <update id="updateAmount" parameterType="com.banking.model.Balance">
+        UPDATE balances
+        SET amount = #{amount}
+        WHERE id = #{id}
+    </update>
+
+    <resultMap id="balanceResultMap" type="com.banking.model.Balance">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="accountId" column="account_id" jdbcType="BIGINT"/>
+        <result property="amount" column="amount" jdbcType="NUMERIC"/>
+        <result property="currency" column="currency" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findByAccountId" parameterType="long"
+            resultMap="balanceResultMap">
+        SELECT id, account_id, amount, currency
+        FROM balances
+        WHERE account_id = #{accountId}
+    </select>
+</mapper>
