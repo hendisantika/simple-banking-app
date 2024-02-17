@@ -1,13 +1,20 @@
 package id.my.hendisantika.simplebankingapp.controller;
 
 import id.my.hendisantika.simplebankingapp.dto.TransactionResponse;
+import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.form.TransactionForm;
+import id.my.hendisantika.simplebankingapp.model.enums.Currency;
+import id.my.hendisantika.simplebankingapp.model.enums.Direction;
 import id.my.hendisantika.simplebankingapp.service.TransactionService;
 import id.my.hendisantika.simplebankingapp.validator.TransactionFormValidator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.validation.BindingResult;
+
+import java.math.BigDecimal;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,4 +38,20 @@ class TransactionControllerTest {
     private TransactionController controller;
     private TransactionForm form;
     private TransactionResponse response;
+
+    @BeforeEach
+    void setUp() {
+        controller = new TransactionController(validator, transactionService);
+        form = new TransactionForm();
+        Mockito.when(bindingResult.hasErrors()).thenReturn(false);
+        Mockito.doNothing().when(validator).validate(Mockito.any(), Mockito.any());
+        response = new TransactionResponse(0, 0,
+                BigDecimal.ZERO, Currency.USD, Direction.IN, "", BigDecimal.ZERO);
+        try {
+            Mockito.when(transactionService.createTransaction(Mockito.any()))
+                    .thenReturn(response);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+    }
 }
