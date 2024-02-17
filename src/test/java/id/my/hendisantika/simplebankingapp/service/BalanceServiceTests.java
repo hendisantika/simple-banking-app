@@ -1,9 +1,13 @@
 package id.my.hendisantika.simplebankingapp.service;
 
+import id.my.hendisantika.simplebankingapp.UnitTestHelper;
+import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
 import id.my.hendisantika.simplebankingapp.model.Balance;
 import id.my.hendisantika.simplebankingapp.model.enums.Currency;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,4 +56,13 @@ public class BalanceServiceTests {
         return Arrays.asList(balance1, balance2);
     }
 
+    @Test
+    void updateBalanceWillThrowExceptionWhenBalanceListEmpty() {
+        Mockito.when(balanceMapper.findByAccountId(Mockito.anyLong())).thenReturn(Collections.emptyList());
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
+            balanceService.updateAmountOfBalance(UnitTestHelper.getTransaction());
+        });
+
+        Assertions.assertNotNull(apiException);
+    }
 }
