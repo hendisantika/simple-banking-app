@@ -1,5 +1,6 @@
 package id.my.hendisantika.simplebankingapp.form;
 
+import id.my.hendisantika.simplebankingapp.model.Account;
 import id.my.hendisantika.simplebankingapp.model.enums.Currency;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -24,4 +25,12 @@ public class AccountForm {
     String country;
     @NotEmpty(message = "No currency is provided")
     List<Currency> currencies;
+
+    public Account toModel() {
+        Account account = new Account();
+        account.setCountry(getCountry());
+        account.setCustomerId(getCustomerId());
+        account.setBalances(populateBalances());
+        return account;
+    }
 }
