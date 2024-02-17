@@ -1,5 +1,7 @@
 package id.my.hendisantika.simplebankingapp.util;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -15,4 +17,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 public class UtilsTests {
+    @Test
+    void isEmptyReturnTrueWhenInputNull() {
+        Assertions.assertTrue(Utils.isEmpty(null));
+    }
 }
