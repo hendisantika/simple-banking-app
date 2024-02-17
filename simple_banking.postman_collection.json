@@ -1,0 +1,117 @@
+{
+  "info": {
+    "_postman_id": "bf099866-731e-428c-a7bb-0d3fa053290e",
+    "name": "simple banking load test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "16494845"
+  },
+  "item": [
+    {
+      "name": "Get_account",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/account/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "account",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create account",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"customerId\":\"DD45\",\n    \"country\":\"BD\",\n    \"currencies\":[\"EUR\",\"USD\"]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/account/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "account",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create trans",
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {
+          "accept-encoding": true
+        }
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"accountId\":2,\n    \"amount\":3.5,\n    \"currency\":\"EUR\",\n    \"direction\":\"IN\",\n    \"description\":\"add\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/transaction/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "transaction",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get trans",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/transaction/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "transaction",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
