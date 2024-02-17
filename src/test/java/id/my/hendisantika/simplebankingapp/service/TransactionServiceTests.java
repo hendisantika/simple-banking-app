@@ -9,6 +9,7 @@ import id.my.hendisantika.simplebankingapp.model.Account;
 import id.my.hendisantika.simplebankingapp.model.Balance;
 import id.my.hendisantika.simplebankingapp.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -55,5 +56,16 @@ public class TransactionServiceTests {
         } catch (ApiException exception) {
             exception.printStackTrace();
         }
+    }
+
+    @Test
+    void createTransactionWillCallInsertMethodOnMapper() {
+        try {
+            transactionService.createTransaction(transaction);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+        Mockito.verify(transactionMapper, Mockito.atLeastOnce()).insertTransaction(transaction);
+
     }
 }
