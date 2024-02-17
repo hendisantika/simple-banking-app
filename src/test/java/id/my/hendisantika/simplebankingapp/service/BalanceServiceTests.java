@@ -4,6 +4,7 @@ import id.my.hendisantika.simplebankingapp.UnitTestHelper;
 import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
 import id.my.hendisantika.simplebankingapp.model.Balance;
+import id.my.hendisantika.simplebankingapp.model.Transaction;
 import id.my.hendisantika.simplebankingapp.model.enums.Currency;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,6 +62,18 @@ public class BalanceServiceTests {
         Mockito.when(balanceMapper.findByAccountId(Mockito.anyLong())).thenReturn(Collections.emptyList());
         ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
             balanceService.updateAmountOfBalance(UnitTestHelper.getTransaction());
+        });
+
+        Assertions.assertNotNull(apiException);
+    }
+
+    @Test
+    void updateBalanceWilThrowExceptionIfBalanceNotFoundForCurrency() {
+        Transaction transaction = UnitTestHelper.getTransaction();
+        transaction.setCurrency(Currency.SEK);
+
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
+            balanceService.updateAmountOfBalance(transaction);
         });
 
         Assertions.assertNotNull(apiException);
