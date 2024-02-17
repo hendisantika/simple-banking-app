@@ -1,5 +1,6 @@
 package id.my.hendisantika.simplebankingapp.form;
 
+import id.my.hendisantika.simplebankingapp.model.Transaction;
 import id.my.hendisantika.simplebankingapp.model.enums.Currency;
 import id.my.hendisantika.simplebankingapp.model.enums.Direction;
 import jakarta.validation.constraints.Min;
@@ -35,4 +36,14 @@ public class TransactionForm {
 
     @NotEmpty(message = "Description missing")
     private String description;
+
+    public Transaction toModel() {
+        Transaction transaction = new Transaction();
+        transaction.setAccountId(getAccountId());
+        transaction.setAmount(getAmount());
+        transaction.setCurrency(getCurrency());
+        transaction.setDirection(getDirection());
+        transaction.setDescription(getDescription());
+        return transaction;
+    }
 }
