@@ -1,10 +1,13 @@
 package id.my.hendisantika.simplebankingapp.controller;
 
 import id.my.hendisantika.simplebankingapp.dto.AccountResponse;
+import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.form.AccountForm;
 import id.my.hendisantika.simplebankingapp.service.AccountService;
 import id.my.hendisantika.simplebankingapp.validator.AccountFormValidator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.validation.BindingResult;
@@ -32,4 +35,18 @@ class AccountControllerTests {
     private AccountForm form;
     private AccountResponse response;
 
+    @BeforeEach
+    void setUp() {
+        controller = new AccountController(validator, accountService);
+        form = new AccountForm();
+        Mockito.when(bindingResult.hasErrors()).thenReturn(false);
+        Mockito.doNothing().when(validator).validate(Mockito.any(), Mockito.any());
+        response = new AccountResponse(0, null, null);
+        try {
+            Mockito.when(accountService.createAccount(Mockito.any()))
+                    .thenReturn(response);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+    }
 }
