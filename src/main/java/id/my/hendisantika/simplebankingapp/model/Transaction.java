@@ -1,5 +1,7 @@
 package id.my.hendisantika.simplebankingapp.model;
 
+import id.my.hendisantika.simplebankingapp.model.enums.Currency;
+import id.my.hendisantika.simplebankingapp.model.enums.Direction;
 import lombok.Data;
 
 import java.math.BigDecimal;

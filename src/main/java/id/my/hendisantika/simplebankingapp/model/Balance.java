@@ -1,5 +1,6 @@
 package id.my.hendisantika.simplebankingapp.model;
 
+import id.my.hendisantika.simplebankingapp.model.enums.Currency;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
