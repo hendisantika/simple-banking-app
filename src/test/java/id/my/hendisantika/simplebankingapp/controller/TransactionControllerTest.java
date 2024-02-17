@@ -1,8 +1,10 @@
 package id.my.hendisantika.simplebankingapp.controller;
 
+import id.my.hendisantika.simplebankingapp.UnitTestHelper;
 import id.my.hendisantika.simplebankingapp.dto.TransactionResponse;
 import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.form.TransactionForm;
+import id.my.hendisantika.simplebankingapp.model.Transaction;
 import id.my.hendisantika.simplebankingapp.model.enums.Currency;
 import id.my.hendisantika.simplebankingapp.model.enums.Direction;
 import id.my.hendisantika.simplebankingapp.service.TransactionService;
@@ -17,6 +19,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.validation.BindingResult;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -78,4 +82,21 @@ class TransactionControllerTest {
 
         Assertions.assertNotNull(apiException);
     }
+
+    @Test
+    void getTransactionWillReturnResponse() {
+        List<Transaction> transactions = null;
+
+        try {
+            Mockito.when(transactionService.getTransactions(Mockito.anyLong()))
+                    .thenReturn(List.of(UnitTestHelper.getTransaction()));
+            transactions = controller.getTransactions(1);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+        Assertions.assertNotNull(transactions);
+        Assertions.assertEquals(1, transactions.size());
+    }
+
 }
