@@ -73,4 +73,18 @@ class AccountControllerTests {
 
         Assertions.assertNotNull(apiException);
     }
+
+    @Test
+    void getAccountWillReturnResponse() {
+        AccountResponse accountResponse = null;
+
+        try {
+            Mockito.when(accountService.getAccount(Mockito.anyLong())).thenReturn(response);
+            accountResponse = controller.getAccount(1);
+        } catch (ApiException exception) {
+            exception.printStackTrace();
+        }
+
+        Assertions.assertNotNull(accountResponse);
+    }
 }
