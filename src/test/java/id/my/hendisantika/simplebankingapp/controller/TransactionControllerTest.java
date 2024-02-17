@@ -68,4 +68,14 @@ class TransactionControllerTest {
 
         Assertions.assertNotNull(response);
     }
+
+    @Test
+    void createTransactionWillThrowExceptionIfFormHasProblem() {
+        Mockito.when(bindingResult.hasErrors()).thenReturn(true);
+        ApiException apiException = Assertions.assertThrows(ApiException.class, () -> {
+            controller.createTransaction(form, bindingResult);
+        });
+
+        Assertions.assertNotNull(apiException);
+    }
 }
