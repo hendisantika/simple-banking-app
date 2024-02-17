@@ -1,11 +1,17 @@
 package id.my.hendisantika.simplebankingapp.service;
 
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
+import id.my.hendisantika.simplebankingapp.model.Balance;
+import id.my.hendisantika.simplebankingapp.model.enums.Currency;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,5 +37,18 @@ public class BalanceServiceTests {
         Mockito.when(balanceMapper.findByAccountId(Mockito.anyLong())).thenReturn(balances());
     }
 
+    private List<Balance> balances() {
+        Balance balance1 = new Balance();
+        balance1.setCurrency(Currency.USD);
+        balance1.setAmount(BigDecimal.ZERO);
+        balance1.setAccountId(5);
+
+        Balance balance2 = new Balance();
+        balance2.setCurrency(Currency.EUR);
+        balance2.setAmount(BigDecimal.ZERO);
+        balance2.setAccountId(5);
+
+        return Arrays.asList(balance1, balance2);
+    }
 
 }
