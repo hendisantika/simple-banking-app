@@ -1,7 +1,9 @@
 package id.my.hendisantika.simplebankingapp.util;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
@@ -20,5 +22,9 @@ public class Utils {
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining("\n"));
+    }
+
+    public static <E> boolean isEmpty(Collection<E> items) {
+        return items == null || items.isEmpty();
     }
 }
