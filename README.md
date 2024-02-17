@@ -46,12 +46,12 @@ Account
 
 ## Technologies used
 
-* Java 11
-* Spring boot 2.7.12
+* Java 21
+* Spring boot 3.2.2
 * MyBatis 2.3.1
-* Gradle 7.6.1
+* Maven 3.9.6
 * JUnit 5.8.2
-* Postgres 15.3
+* Postgres 16.1
 * RabbitMQ 3.11
 * Docker 24.0.1
 
