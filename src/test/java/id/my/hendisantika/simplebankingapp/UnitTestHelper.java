@@ -1,6 +1,7 @@
 package id.my.hendisantika.simplebankingapp;
 
 import id.my.hendisantika.simplebankingapp.model.Account;
+import id.my.hendisantika.simplebankingapp.model.Balance;
 import id.my.hendisantika.simplebankingapp.model.Transaction;
 import id.my.hendisantika.simplebankingapp.model.enums.Currency;
 import id.my.hendisantika.simplebankingapp.model.enums.Direction;
@@ -37,5 +38,13 @@ public class UnitTestHelper {
         transaction.setCurrency(Currency.USD);
         transaction.setDescription("");
         return transaction;
+    }
+
+    public static Balance getBalance() {
+        Balance balance = new Balance();
+        balance.setCurrency(Currency.USD);
+        balance.setAmount(BigDecimal.valueOf(5));
+        balance.setAccountId(5);
+        return balance;
     }
 }
