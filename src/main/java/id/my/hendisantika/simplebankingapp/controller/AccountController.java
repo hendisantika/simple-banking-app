@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,5 +44,10 @@ public class AccountController {
         }
 
         return accountService.createAccount(form.toModel());
+    }
+
+    @GetMapping("/api/account/{accountId}")
+    public AccountResponse getAccount(@PathVariable("accountId") long accountId) throws ApiException {
+        return accountService.getAccount(accountId);
     }
 }
