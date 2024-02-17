@@ -2,6 +2,7 @@ package id.my.hendisantika.simplebankingapp.service;
 
 import id.my.hendisantika.simplebankingapp.config.MessagePublisher;
 import id.my.hendisantika.simplebankingapp.dto.AccountResponse;
+import id.my.hendisantika.simplebankingapp.dto.BalanceResponse;
 import id.my.hendisantika.simplebankingapp.exception.ApiException;
 import id.my.hendisantika.simplebankingapp.mapper.AccountMapper;
 import id.my.hendisantika.simplebankingapp.mapper.BalanceMapper;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,5 +51,13 @@ public class AccountService {
         Account account = accountMapper.findById(accountId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Account not found"));
         return getAccountResponse(account);
+    }
+
+    private AccountResponse getAccountResponse(Account account) {
+        return new AccountResponse(account.getId(), account.getCustomerId(),
+                account.getBalances()
+                        .stream()
+                        .map(balance -> new BalanceResponse(balance.getCurrency(), balance.getAmount()))
+                        .collect(Collectors.toList()));
     }
 }
